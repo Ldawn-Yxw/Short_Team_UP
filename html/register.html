@@ -1,83 +1,87 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="zh-CN">
 
 <head>
-    <title>Report Login Form Responsive Widget Template</title>
-    <!-- Meta tag Keywords -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="UTF-8" />
-    <meta name="keywords"
-        content="Report Login Form Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-    <!-- //Meta tag Keywords -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <!--/Style-CSS -->
-    <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
-    <!--//Style-CSS -->
-
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" media="all">
-
-    <style>
-        /* Remove number input spinners */
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        /* 恢复radio按钮的默认样式 */
-        input[type="radio"] {
-            -webkit-appearance: radio;
-            -moz-appearance: radio;
-            appearance: radio;
-            width: auto;
-            margin-right: 5px;
-        }
-
-        .gender-group {
-            margin: 15px 0;
-        }
-
-        .gender-group label {
-            margin-right: 15px;
-        }
-    </style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册 - 运动组队系统</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
 <body>
+    <!-- 背景 -->
+    <div class="background-wrapper">
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
+        <div class="light-beam"></div>
+    </div>
 
-    <!-- form section start -->
-    <section class="w3l-hotair-form">
-        <h1>运动组队系统</h1>
-        <div class="container">
-            <!-- /form -->
-            <div class="workinghny-form-grid">
-                <div class="main-hotair">
-                    <div class="content-wthree">
-                        <h2>注册</h2>
-                        <form action="#" method="post">
-                            <input type="number" class="text" name="text" placeholder="用户名" required="" autofocus>
-                            <input type="password" class="password" name="password" placeholder="密码" required="" autofocus>
-                            <input type="number" class="age" name="age" placeholder="年龄" min="0" max="150" required="" autofocus> 
-                            <div class="gender-group">
-                                <input type="radio" name="gender" value="male"><label for="male">男</label>
-                                <input type="radio" name="gender" value="female"><label for="male">女</label>
-                            </div>
-                            <input type="text" class="text" name="wechat_id" placeholder="微信号" required="" autofocus>
-                            <button class="btn" type="submit">注册</button>
-                        </form>
-                    </div>
-                    <div class="w3l_form align-self">
-                        <div class="left_grid_info">
-                            <img src="images/1.png" alt="" class="img-fluid">
-                        </div>
-                    </div>
-                </div>
+    <div class="login-container">
+        <div class="login-box register-box">
+            <div class="login-header">
+                <i class="fas fa-running"></i>
+                <h1>注册新账号</h1>
             </div>
-            <!-- //form -->
+            <form id="registerForm" class="login-form">
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">邮箱</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">确认密码</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+                </div>
+                <div class="form-error" id="registerError"></div>
+                <button type="submit" class="btn-login">注册</button>
+                <div class="form-links">
+                    <a href="index.html">返回登录</a>
+                </div>
+            </form>
         </div>
-    </section>
-    <!-- //form section start -->
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const errorElement = document.getElementById('registerError');
+            errorElement.textContent = '';
+
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+
+            if (password !== confirmPassword) {
+                errorElement.textContent = '两次输入的密码不一致';
+                return;
+            }
+
+            try {
+                const response = await api.register({
+                    username,
+                    email,
+                    password,
+                    confirm_password: confirmPassword
+                });
+                // 注册成功，跳转到登录页
+                window.location.href = 'index.html';
+            } catch (error) {
+                errorElement.textContent = error.message;
+            }
+        });
+    </script>
 </body>
 
 </html>

@@ -1,60 +1,68 @@
-
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="zh-CN">
 
 <head>
-    <title>Report Login Form Responsive Widget Template</title>
-    <!-- Meta tag Keywords -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="UTF-8" />
-    <meta name="keywords"
-        content="Report Login Form Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-    <!-- //Meta tag Keywords -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <!--/Style-CSS -->
-    <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
-    <!--//Style-CSS -->
-
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" media="all">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - 运动组队系统</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
 <body>
-    
-    <!-- form section start -->
-    <section class="w3l-hotair-form">
-        <h1>运动组队系统</h1>
-        <img src="./images/background.jpg" class="background">
-        <div class="container">
-            <!-- /form -->
-            <div class="workinghny-form-grid">
-                <div class="main-hotair">
-                    <div class="content-wthree">
-                        <h2>登录</h2>
-                        <form action="#" method="post">
-                            <input type="text" class="text" name="text" placeholder="用户" required="" autofocus>
-                            <input type="password" class="password" name="password" placeholder="密码" required="" autofocus>
-                            <button class="btn" type="submit">登录</button>
-                        </form>
-                        
-                        <p class="account">如果没有账号那就注册一个吧<a href="#signup"><br/>注册</a></p>
-                    </div>
-                    <div class="w3l_form align-self">
-                        <div class="left_grid_info">
-                            <img src="./images/login.png" alt="" class="img-fluid">
-                        </div>
-                    </div>
-                </div>
+    <!-- 背景 -->
+    <div class="background-wrapper">
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
+        <div class="light-beam"></div>
+    </div>
+
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <i class="fas fa-running"></i>
+                <h1>运动组队系统</h1>
             </div>
-            <!-- //form -->
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-error" id="loginError"></div>
+                <button type="submit" class="btn-login">登录</button>
+                <div class="form-links">
+                    <a href="register.html">注册新账号</a>
+                    <a href="#">忘记密码？</a>
+                </div>
+            </form>
         </div>
-        <!-- copyright-->
-        <div class="copyright text-center">
-            <!-- <p class="copy-footer-29">© 2021 Report Login Form. All rights reserved | <a target="_blank" href="http://www.mobanwang.com/" title="网页模板">网页模板</a></p> -->
-        </div>
-        <!-- //copyright-->
-    </section>
-    <!-- //form section start -->
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const errorElement = document.getElementById('loginError');
+            errorElement.textContent = '';
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await api.login(username, password);
+                // 登录成功，跳转到主页
+                window.location.href = 'main.html';
+            } catch (error) {
+                errorElement.textContent = error.message;
+            }
+        });
+    </script>
 </body>
 
 </html>
