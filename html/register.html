@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -17,10 +16,36 @@
 
     <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" media="all">
 
+    <style>
+        /* Remove number input spinners */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* 恢复radio按钮的默认样式 */
+        input[type="radio"] {
+            -webkit-appearance: radio;
+            -moz-appearance: radio;
+            appearance: radio;
+            width: auto;
+            margin-right: 5px;
+        }
+
+        .gender-group {
+            margin: 15px 0;
+        }
+
+        .gender-group label {
+            margin-right: 15px;
+        }
+    </style>
+
 </head>
 
 <body>
-    
+
     <!-- form section start -->
     <section class="w3l-hotair-form">
         <h1>运动组队系统</h1>
@@ -30,33 +55,28 @@
             <div class="workinghny-form-grid">
                 <div class="main-hotair">
                     <div class="content-wthree">
-                        <h2>登录</h2>
-                        <form action="#" method="post">
-                            <input type="text" class="text" name="text" placeholder="用户" required="" autofocus>
+                        <h2>注册</h2>
+                        <form action="#" method="post"  onsubmit="alert('注册成功！'); setTimeout(function(){window.location.href='index.html';}, 10); return false;">
+                            <input type="text" class="text" name="text" placeholder="用户名" required="" autofocus>
                             <input type="password" class="password" name="password" placeholder="密码" required="" autofocus>
-                            <button class="btn" type="submit">登录</button>
+                            <input type="number" class="age" name="age" placeholder="年龄" min="0" max="150" required="" autofocus> 
+                            <div class="gender-group">
+                                <input type="radio" name="gender" value="male"><label for="male">男</label>
+                                <input type="radio" name="gender" value="female"><label for="male">女</label>
+                            </div>
+                            <input type="text" class="text" name="wechat_id" placeholder="微信号" required="" autofocus>
+                            <button class="btn" type="submit">注册</button>
                         </form>
-                        
-<<<<<<< HEAD
-                        <p class="account">如果没有账号那就注册一个吧<a href="#signup"><br/>注册</a></p>
-=======
-                        <p class="account">如果没有账号那就注册一个吧<a href="./register.html"><br/>注册</a></p>
->>>>>>> 95997ee5dc7ef8c4691d80f23390c1f6d9a541e1
                     </div>
                     <div class="w3l_form align-self">
                         <div class="left_grid_info">
-                            <img src="./images/login.png" alt="" class="img-fluid">
+                            <img src="images/login.png" alt="" class="img-fluid">
                         </div>
                     </div>
                 </div>
             </div>
             <!-- //form -->
         </div>
-        <!-- copyright-->
-        <div class="copyright text-center">
-            <!-- <p class="copy-footer-29">© 2021 Report Login Form. All rights reserved | <a target="_blank" href="http://www.mobanwang.com/" title="网页模板">网页模板</a></p> -->
-        </div>
-        <!-- //copyright-->
     </section>
     <!-- //form section start -->
 </body>
