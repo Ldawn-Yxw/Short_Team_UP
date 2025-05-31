@@ -459,5 +459,29 @@ p.copy-footer-29 a:hover {
     /* 透明度设置 */
     opacity: 0.8; /* 透明度值 0~1（0.8=80%可见） */
 }
+
+/* Remove number input spinners */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* 恢复radio按钮的默认样式 */
+        input[type="radio"] {
+            -webkit-appearance: radio;
+            -moz-appearance: radio;
+            appearance: radio;
+            width: auto;
+            margin-right: 5px;
+        }
+
+        .gender-group {
+            margin: 15px 0;
+        }
+
+        .gender-group label {
+            margin-right: 15px;
+        }
 /*-- //responsive design --*/
 /*-- //form styling --*/
