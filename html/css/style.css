@@ -446,6 +446,18 @@ p.copy-footer-29 a:hover {
     }
 
 }
-
+.img-fluid{
+    height: 300px;
+}
+.background{
+    position: fixed; /* 固定定位确保覆盖整个视口 */
+    top: 0;
+    left: 0;
+    width: 100vw;     /* 宽度铺满视口 */
+    height: 100vh;    /* 高度铺满视口 */
+    z-index: -1;      /* 置于最下层 */
+    /* 透明度设置 */
+    opacity: 0.8; /* 透明度值 0~1（0.8=80%可见） */
+}
 /*-- //responsive design --*/
 /*-- //form styling --*/
