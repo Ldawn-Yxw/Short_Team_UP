@@ -655,6 +655,69 @@ body {
     text-decoration: underline;
 }
 
+/* 性别选择样式 */
+.gender-group {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 15px;
+}
+
+.gender-option {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.gender-option input[type="radio"] {
+    display: none;
+}
+
+.radio-circle {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #0568C1;
+    border-radius: 50%;
+    margin-right: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.radio-circle::after {
+    content: "";
+    width: 12px;
+    height: 12px;
+    background: #0568C1;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.2s ease;
+}
+
+.gender-option input[type="radio"]:checked + .radio-circle::after {
+    transform: scale(1);
+}
+
+.radio-label {
+    color: #666;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.gender-option:hover .radio-circle {
+    border-color: #045aa8;
+}
+
+.gender-option:hover .radio-label {
+    color: #045aa8;
+}
+
+.gender-option input[type="radio"]:checked ~ .radio-label {
+    color: #0568C1;
+}
+
 /* 响应式设计 */
 @media (max-width: 480px) {
     .login-box {

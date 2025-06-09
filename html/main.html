@@ -17,34 +17,17 @@
             <span>运动组队系统</span>
         </div>
         <div class="sidebar-menu">
-            <a href="#" class="active">
+            <a href="main.html" class="active">
                 <i class="fas fa-home"></i>
                 <span>首页</span>
             </a>
-            <a href="#">
+            <a href="create_team.html">
                 <i class="fas fa-plus-circle"></i>
                 <span>创建组队</span>
             </a>
-            <a href="#">
-                <i class="fas fa-search"></i>
-                <span>查找活动</span>
-            </a>
-            <a href="#">
-                <i class="fas fa-star"></i>
-                <span>热门活动</span>
-            </a>
-            <a href="#">
-                <i class="fas fa-history"></i>
-                <span>历史记录</span>
-            </a>
-            <a href="#">
+            <a href="my_teams.html">
                 <i class="fas fa-user-friends"></i>
                 <span>我的组队</span>
-            </a>
-            <a href="#">
-                <i class="fas fa-bell"></i>
-                <span>消息通知</span>
-                <span class="badge">2</span>
             </a>
         </div>
     </nav>
@@ -53,14 +36,12 @@
     <main class="main-content">
         <!-- 顶部栏 -->
         <header class="top-bar">
-            <div class="search-box">
+            <!-- <div class="search-box">
                 <input type="text" placeholder="搜索活动...">
                 <i class="fas fa-search"></i>
-            </div>
+            </div> -->
             <div class="user-menu">
-                <img src="https://via.placeholder.com/40" alt="用户头像" class="avatar">
-                <span class="username">用户名</span>
-                <i class="fas fa-chevron-down"></i>
+                <span class="username" id="username">用户名</span>
             </div>
         </header>
 
@@ -70,117 +51,48 @@
             <section class="sports-categories">
                 <div class="section-header">
                     <h2>运动项目</h2>
-                    <a href="#" class="view-all">查看全部 <i class="fas fa-angle-right"></i></a>
                 </div>
                 <div class="category-list">
-                    <button class="category-item active">
+                    <button class="category-item active" data-type="">
+                        <i class="fas fa-th"></i>
+                        <span>全部</span>
+                    </button>
+                    <button class="category-item" data-type="basketball">
                         <i class="fas fa-basketball-ball"></i>
                         <span>篮球</span>
-                        <small>128个活动</small>
                     </button>
-                    <button class="category-item">
+                    <button class="category-item" data-type="football">
                         <i class="fas fa-futbol"></i>
                         <span>足球</span>
-                        <small>96个活动</small>
                     </button>
-                    <button class="category-item">
+                    <button class="category-item" data-type="pingpong">
                         <i class="fas fa-table-tennis"></i>
                         <span>乒乓球</span>
-                        <small>64个活动</small>
                     </button>
-                    <button class="category-item">
+                    <button class="category-item" data-type="running">
                         <i class="fas fa-running"></i>
                         <span>跑步</span>
-                        <small>256个活动</small>
                     </button>
-                    <button class="category-item">
+                    <button class="category-item" data-type="volleyball">
                         <i class="fas fa-volleyball-ball"></i>
                         <span>排球</span>
-                        <small>48个活动</small>
                     </button>
                 </div>
             </section>
 
-            <!-- 推荐活动 -->
-            <section class="recommended-activities">
+            <!-- 组队列表 -->
+            <section class="team-list">
                 <div class="section-header">
-                    <h2>推荐活动</h2>
-                    <div class="filter-options">
-                        <button class="active">全部</button>
-                        <button>今天</button>
-                        <button>本周</button>
-                        <button>本月</button>
-                    </div>
+                    <h2>组队列表</h2>
                 </div>
                 <div class="team-cards">
-                    <div class="team-card">
-                        <div class="card-header">
-                            <img src="https://via.placeholder.com/50" alt="发起人头像" class="creator-avatar">
-                            <div class="creator-info">
-                                <h3>篮球3V3</h3>
-                                <p>发起人：张三</p>
-                            </div>
-                            <div class="activity-status hot">
-                                <i class="fas fa-fire"></i> 火热
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <p><i class="fas fa-map-marker-alt"></i> 地点：第一体育馆</p>
-                            <p><i class="fas fa-clock"></i> 时间：今天 18:00</p>
-                            <p><i class="fas fa-users"></i> 人数：3/6</p>
-                            <p><i class="fas fa-info-circle"></i> 简介：来一场快节奏的3V3对抗赛！</p>
-                            <div class="tags">
-                                <span class="tag">休闲</span>
-                                <span class="tag">新手友好</span>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <button class="like-btn">
-                                <i class="far fa-heart"></i>
-                                <span>12</span>
-                            </button>
-                            <button class="share-btn">
-                                <i class="fas fa-share"></i>
-                            </button>
-                            <button class="join-btn">加入组队</button>
-                        </div>
-                    </div>
-
-                    <div class="team-card">
-                        <div class="card-header">
-                            <img src="https://via.placeholder.com/50" alt="发起人头像" class="creator-avatar">
-                            <div class="creator-info">
-                                <h3>晨跑团</h3>
-                                <p>发起人：李四</p>
-                            </div>
-                            <div class="activity-status new">
-                                <i class="fas fa-star"></i> 新活动
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <p><i class="fas fa-map-marker-alt"></i> 地点：操场</p>
-                            <p><i class="fas fa-clock"></i> 时间：明天 6:30</p>
-                            <p><i class="fas fa-users"></i> 人数：5/10</p>
-                            <p><i class="fas fa-info-circle"></i> 简介：晨跑5公里，欢迎加入！</p>
-                            <div class="tags">
-                                <span class="tag">健身</span>
-                                <span class="tag">团队活动</span>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <button class="like-btn">
-                                <i class="far fa-heart"></i>
-                                <span>8</span>
-                            </button>
-                            <button class="share-btn">
-                                <i class="fas fa-share"></i>
-                            </button>
-                            <button class="join-btn">加入组队</button>
-                        </div>
-                    </div>
+                    <!-- 组队卡片将由JavaScript动态生成 -->
                 </div>
             </section>
         </div>
     </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html> 

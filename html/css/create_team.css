@@ -1,56 +1,90 @@
 /* 创建表单样式 */
-.create-form {
-    max-width: 800px;
-    margin: 0 auto;
+.create-team-container {
+    min-height: 100vh;
     padding: 2rem;
+    background: linear-gradient(135deg, #0568C1, #1e88e5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.create-form h2 {
+.create-team-box {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 800px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.create-team-box h1 {
     text-align: center;
     color: #333;
     margin-bottom: 2rem;
-    font-size: 1.8rem;
+    font-size: 2rem;
+}
+
+.create-team-form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
 }
 
 .form-section {
     background: white;
-    border-radius: 15px;
+    border-radius: 10px;
     padding: 1.5rem;
     margin-bottom: 1.5rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .form-section h3 {
-    color: #333;
-    margin-bottom: 1.5rem;
+    color: #2c3e50;
+    margin: 0 0 1.5rem 0;
     font-size: 1.2rem;
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.8rem;
     border-bottom: 2px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-section h3 i {
+    color: #0568C1;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
+}
+
+.form-group.half {
+    flex: 1;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
-    color: #666;
+    color: #2c3e50;
     font-weight: 500;
+    font-size: 0.9rem;
 }
 
-.form-group input[type="text"],
-.form-group input[type="number"],
-.form-group input[type="date"],
-.form-group input[type="time"],
+.form-group input,
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 0.8rem 1rem;
-    border: 1px solid #e5e5e5;
+    padding: 0.8rem;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
     font-size: 1rem;
     transition: all 0.3s;
+    background-color: #fff;
 }
 
 .form-group input:focus,
@@ -63,10 +97,9 @@
 
 .form-group textarea {
     resize: vertical;
-    min-height: 100px;
+    min-height: 120px;
 }
 
-/* 标签选择器样式 */
 .tags-container {
     display: flex;
     flex-wrap: wrap;
@@ -76,11 +109,12 @@
 .tag-checkbox {
     display: inline-flex;
     align-items: center;
-    padding: 0.5rem 1rem;
-    border: 2px solid #e5e5e5;
+    padding: 0.5rem 1.2rem;
+    border: 2px solid #e0e0e0;
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.3s;
+    background-color: white;
 }
 
 .tag-checkbox input[type="checkbox"] {
@@ -88,25 +122,28 @@
 }
 
 .tag-checkbox span {
-    color: #666;
+    color: #2c3e50;
     font-weight: 500;
+    font-size: 0.9rem;
 }
 
 .tag-checkbox:hover {
     border-color: #0568C1;
-    background-color: rgba(5, 104, 193, 0.1);
+    background-color: rgba(5, 104, 193, 0.05);
 }
 
 .tag-checkbox input[type="checkbox"]:checked + span {
     color: #0568C1;
 }
 
-.tag-checkbox input[type="checkbox"]:checked + span::before {
-    content: '✓';
-    margin-right: 0.5rem;
+.form-error {
+    color: #e74c3c;
+    text-align: center;
+    min-height: 1.5rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
 }
 
-/* 按钮样式 */
 .form-actions {
     display: flex;
     justify-content: flex-end;
@@ -116,51 +153,172 @@
 
 .btn-cancel,
 .btn-create {
-    padding: 0.8rem 2rem;
-    border-radius: 25px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
     font-weight: 500;
+    font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s;
 }
 
 .btn-cancel {
     background: none;
-    border: 2px solid #e5e5e5;
-    color: #666;
+    border: 2px solid #95a5a6;
+    color: #95a5a6;
 }
 
 .btn-cancel:hover {
-    border-color: #666;
-    color: #333;
+    background: #95a5a6;
+    color: white;
 }
 
 .btn-create {
-    background-color: #0568C1;
+    background: #0568C1;
     border: none;
     color: white;
 }
 
 .btn-create:hover {
-    background-color: #045aa8;
+    background: #045aa8;
     transform: translateY(-2px);
 }
 
 /* 响应式设计 */
 @media (max-width: 768px) {
-    .create-form {
-        padding: 1rem;
+    .create-team-form {
+        padding: 0.5rem;
     }
 
     .form-section {
         padding: 1rem;
     }
 
-    .form-actions {
+    .form-row {
         flex-direction: column;
+        gap: 0;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
     }
 
     .btn-cancel,
     .btn-create {
         width: 100%;
+        justify-content: center;
+    }
+
+    .tags-container {
+        gap: 0.5rem;
+    }
+
+    .tag-checkbox {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* 页面标题 */
+.page-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 2rem 0;
+    background: linear-gradient(135deg, #0568C1, #045aa8);
+    margin: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.page-title::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.page-title h1 {
+    font-size: 2rem;
+    color: white;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.page-title h1 i {
+    color: #fdc500;
+    font-size: 2.2rem;
+    animation: pulse 2s infinite;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* 调整顶部栏样式以适应新标题 */
+.top-bar {
+    justify-content: flex-end;
+    padding-right: 2rem;
+    background: transparent;
+    box-shadow: none;
+    z-index: 2;
+    position: absolute;
+    top: 1rem;
+    right: 0;
+}
+
+/* 内容区域调整 */
+.content-wrapper {
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .page-title {
+        margin: 0;
+        padding: 1.5rem 1rem;
+    }
+
+    .page-title h1 {
+        font-size: 1.5rem;
+        text-align: center;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .page-title h1 i {
+        font-size: 1.8rem;
+    }
+
+    .top-bar {
+        padding-right: 1rem;
+    }
+
+    .content-wrapper {
+        padding: 1.5rem 1rem;
     }
 } 
