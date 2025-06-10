@@ -174,3 +174,20 @@ def team_members(request, team_id):
     
     serializer = TeamMemberSerializer(members, many=True)
     return Response(serializer.data)
+
+@csrf_exempt
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_team(request, team_id):
+    """删除组队"""
+    team = get_object_or_404(Team, id=team_id)
+    user = request.user
+    
+    # 检查是否是创建者
+    if team.creator != user:
+        return Response({'error': '只有创建者可以删除组队'}, status=status.HTTP_403_FORBIDDEN)
+    
+    # 删除组队（这会自动删除相关的registration记录，因为我们使用了外键的CASCADE）
+    team.delete()
+    
+    return Response({'message': '成功删除组队'}, status=status.HTTP_200_OK)

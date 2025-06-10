@@ -396,4 +396,17 @@ const api = {
             throw error;
         }
     },
+
+    // 删除组队
+    deleteTeam: async (teamId) => {
+        try {
+            const response = await fetch(`${BASE_URL}/teams/${teamId}/delete/`, {
+                ...(await getRequestConfig('DELETE'))
+            });
+            
+            return await handleResponse(response);
+        } catch (error) {
+            throw error;
+        }
+    },
 }; 

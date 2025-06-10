@@ -14,6 +14,10 @@ class Team(models.Model):
         ('pingpong', '乒乓球'),
         ('running', '跑步'),
         ('volleyball', '排球'),
+        ('badminton', '羽毛球'),
+        ('tennis', '网球'),
+        ('fitness', '有氧健身'),
+        ('swimming', '游泳'),
     ]
     
     # 组队ID（Django自带的id字段）

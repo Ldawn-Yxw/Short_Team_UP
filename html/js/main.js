@@ -283,7 +283,11 @@ function getSportIcon(sportType) {
         'football': 'fa-futbol',
         'pingpong': 'fa-table-tennis',
         'running': 'fa-running',
-        'volleyball': 'fa-volleyball-ball'
+        'volleyball': 'fa-volleyball-ball',
+        'badminton': 'fa-feather-alt',  // 使用羽毛图标代表羽毛球
+        'tennis': 'fa-baseball-ball',  // 使用球类图标代表网球
+        'fitness': 'fa-dumbbell',
+        'swimming': 'fa-swimmer'
     };
     return icons[sportType] || 'fa-dumbbell';
 }
@@ -295,7 +299,11 @@ function getSportName(sportType) {
         'football': '足球',
         'pingpong': '乒乓球',
         'running': '跑步',
-        'volleyball': '排球'
+        'volleyball': '排球',
+        'badminton': '羽毛球',
+        'tennis': '网球',
+        'fitness': '有氧健身',
+        'swimming': '游泳'
     };
     return names[sportType] || sportType;
 }

@@ -68,13 +68,32 @@ async function loadTeamDetail() {
 
 // 显示组队信息
 function displayTeamInfo(team) {
-    // 设置运动图标
+    // 设置运动图标和类型
     const sportIcon = document.getElementById('sportIcon');
-    sportIcon.innerHTML = `<i class="fas ${getSportIcon(team.sport_type)}"></i>`;
+    const sportIconClass = team.sport_type === 'badminton' ? 'fa-feather-alt' : 
+                          team.sport_type === 'tennis' ? 'fa-baseball-ball' : 
+                          team.sport_type === 'fitness' ? 'fa-dumbbell' : 
+                          team.sport_type === 'swimming' ? 'fa-swimmer' : 
+                          team.sport_type === 'basketball' ? 'fa-basketball-ball' :
+                          team.sport_type === 'football' ? 'fa-futbol' :
+                          team.sport_type === 'pingpong' ? 'fa-table-tennis' :
+                          team.sport_type === 'running' ? 'fa-running' :
+                          team.sport_type === 'volleyball' ? 'fa-volleyball-ball' : 
+                          'fa-dumbbell';
+    sportIcon.innerHTML = `<i class="fas ${sportIconClass}"></i>`;
     
     // 设置基本信息
     document.getElementById('teamTitle').textContent = team.title;
-    document.getElementById('sportType').textContent = getSportName(team.sport_type);
+    document.getElementById('sportType').textContent = team.sport_type === 'badminton' ? '羽毛球' : 
+                                                     team.sport_type === 'tennis' ? '网球' : 
+                                                     team.sport_type === 'fitness' ? '有氧健身' : 
+                                                     team.sport_type === 'swimming' ? '游泳' : 
+                                                     team.sport_type === 'basketball' ? '篮球' :
+                                                     team.sport_type === 'football' ? '足球' :
+                                                     team.sport_type === 'pingpong' ? '乒乓球' :
+                                                     team.sport_type === 'running' ? '跑步' :
+                                                     team.sport_type === 'volleyball' ? '排球' : 
+                                                     team.sport_type;
     document.getElementById('creatorName').textContent = team.creator.username;
     document.getElementById('teamDateTime').textContent = `${formatDateTime(team.start_time)} - ${formatTime(team.end_time)}`;
     document.getElementById('teamLocation').textContent = team.location;

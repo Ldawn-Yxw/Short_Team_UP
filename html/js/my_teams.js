@@ -1,10 +1,19 @@
 // 我的组队页面JavaScript
 
 let currentType = 'created'; // 当前显示的类型
+let currentUser = null; // 当前用户信息
 
 document.addEventListener('DOMContentLoaded', async () => {
     // 加载用户信息
-    await loadUserProfile();
+    try {
+        const userProfile = await loadUserProfile();
+        currentUser = userProfile;
+    } catch (error) {
+        console.error('加载用户信息失败:', error);
+        alert('加载用户信息失败，请重新登录');
+        window.location.href = 'login.html';
+        return;
+    }
     
     // 绑定事件
     bindEvents();
@@ -39,7 +48,7 @@ async function loadUserProfile() {
         try {
             const userProfile = JSON.parse(cachedProfile);
             document.getElementById('username').textContent = userProfile.username;
-            return;
+            return userProfile;
         } catch (e) {
             console.error('解析缓存用户信息失败:', e);
         }
@@ -52,12 +61,13 @@ async function loadUserProfile() {
         
         // 缓存用户信息
         sessionStorage.setItem('userProfile', JSON.stringify(userProfile));
+        return userProfile;
     } catch (error) {
         console.error('加载用户信息失败:', error);
         // 如果没有缓存且API调用失败，则跳转到登录页
         if (!cachedProfile) {
             alert('获取用户信息失败，请重新登录');
-            window.location.href = 'index.html';
+            window.location.href = 'login.html';
         }
     }
 }
@@ -107,7 +117,7 @@ async function loadMyTeams() {
 
 // 创建组队卡片HTML
 function createTeamCard(team) {
-    const isCreator = currentType === 'created';
+    const isCreator = team.creator.id === currentUser.id;
     const endTime = new Date(team.end_time);
     const now = new Date();
     const isEnded = endTime < now;
@@ -116,16 +126,34 @@ function createTeamCard(team) {
         <div class="team-card ${isEnded ? 'ended' : ''}" onclick="viewTeamDetail(${team.id})" style="cursor: pointer;">
             <div class="team-header">
                 <div class="sport-icon">
-                    <i class="fas ${getSportIcon(team.sport_type)}"></i>
+                    <i class="fas ${team.sport_type === 'badminton' ? 'fa-feather-alt' : 
+                                  team.sport_type === 'tennis' ? 'fa-baseball-ball' : 
+                                  team.sport_type === 'fitness' ? 'fa-dumbbell' : 
+                                  team.sport_type === 'swimming' ? 'fa-swimmer' : 
+                                  team.sport_type === 'basketball' ? 'fa-basketball-ball' :
+                                  team.sport_type === 'football' ? 'fa-futbol' :
+                                  team.sport_type === 'pingpong' ? 'fa-table-tennis' :
+                                  team.sport_type === 'running' ? 'fa-running' :
+                                  team.sport_type === 'volleyball' ? 'fa-volleyball-ball' : 
+                                  'fa-dumbbell'}"></i>
                 </div>
                 <div class="team-info">
                     <h3>${team.title}</h3>
-                    <span class="sport-type">${getSportName(team.sport_type)}</span>
-                </div>
-                <div class="team-status">
-                    ${isEnded ? '<span class="ended-badge">已结束</span>' : ''}
-                    ${isCreator ? '<span class="creator-badge">创建者</span>' : '<span class="member-badge">已加入</span>'}
-                    ${team.is_full ? '<span class="full-badge">已满员</span>' : ''}
+                    <div class="team-meta">
+                        <span class="sport-type-tag">${team.sport_type === 'badminton' ? '羽毛球' : 
+                                                      team.sport_type === 'tennis' ? '网球' : 
+                                                      team.sport_type === 'fitness' ? '有氧健身' : 
+                                                      team.sport_type === 'swimming' ? '游泳' : 
+                                                      team.sport_type === 'basketball' ? '篮球' :
+                                                      team.sport_type === 'football' ? '足球' :
+                                                      team.sport_type === 'pingpong' ? '乒乓球' :
+                                                      team.sport_type === 'running' ? '跑步' :
+                                                      team.sport_type === 'volleyball' ? '排球' : 
+                                                      team.sport_type}</span>
+                        ${isCreator ? '<span class="creator-tag">创建者</span>' : ''}
+                        ${team.is_full ? '<span class="full-tag">已满员</span>' : ''}
+                        ${isEnded ? '<span class="ended-tag">已结束</span>' : ''}
+                    </div>
                 </div>
             </div>
             
@@ -145,18 +173,21 @@ function createTeamCard(team) {
             </div>
             
             <div class="team-requirements">
-                <p>${team.requirements}</p>
+                <p>${team.requirements || '暂无要求'}</p>
             </div>
             
             <div class="team-actions" onclick="event.stopPropagation()">
-                ${!isCreator && !isEnded ? `
+                ${isCreator ? `
+                    <button onclick="deleteTeam(${team.id})" class="btn-danger btn-sm">
+                        <i class="fas fa-trash"></i> 删除组队
+                    </button>
+                ` : !isEnded ? `
                     <button onclick="leaveTeam(${team.id})" class="btn-danger btn-sm">
                         <i class="fas fa-sign-out-alt"></i> 退出组队
                     </button>
                 ` : ''}
-                ${isEnded ? '<span class="ended-text">活动已结束</span>' : ''}
                 <button onclick="viewTeamDetail(${team.id})" class="btn-primary btn-sm">
-                    <i class="fas fa-eye"></i> 查看成员
+                    <i class="fas fa-users"></i> 查看成员
                 </button>
             </div>
         </div>
@@ -224,4 +255,19 @@ function formatTime(dateString) {
     const hour = date.getHours().toString().padStart(2, '0');
     const minute = date.getMinutes().toString().padStart(2, '0');
     return `${hour}:${minute}`;
+}
+
+// 删除组队
+async function deleteTeam(teamId) {
+    if (!confirm('确定要删除该组队吗？此操作不可恢复！')) {
+        return;
+    }
+    
+    try {
+        await api.deleteTeam(teamId);
+        alert('成功删除组队');
+        await loadMyTeams(); // 重新加载列表
+    } catch (error) {
+        alert('删除失败：' + error.message);
+    }
 } 
