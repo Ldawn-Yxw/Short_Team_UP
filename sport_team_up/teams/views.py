@@ -9,11 +9,10 @@ from .models import Team, Registration
 from .serializers import TeamCreateSerializer, TeamListSerializer, TeamDetailSerializer
 
 # Create your views here.
-
+@csrf_exempt
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def teams(request):
-    
     """获取组队列表或创建新组队"""
     if request.method == 'GET':
         # 获取查询参数
@@ -57,6 +56,7 @@ def teams(request):
     # 创建新组队
         serializer = TeamCreateSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
+            print(serializer)
             team = serializer.save()
             return Response(
                 TeamDetailSerializer(team, context={'request': request}).data,

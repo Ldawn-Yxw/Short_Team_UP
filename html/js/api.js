@@ -51,12 +51,13 @@ async function ensureCSRFToken() {
     return token;
 }
 
-// 通用请求配置（已禁用CSRF）
+// 通用请求配置
 const getRequestConfig = async (method = 'GET', data = null) => {
     const config = {
         method: method,
         headers: {
             'Content-Type': 'application/json',
+            'X-CSRFToken': ensureCSRFToken(),
         },
         credentials: 'include',  // 包含cookie用于session认证
     };
@@ -172,17 +173,18 @@ const api = {
     // 创建组队
     createTeam: async (teamData) => {
         try {
+            let data;
             data = await getRequestConfig('POST', teamData)
             sessionStorage.setItem('data', JSON.stringify(data));
             const response = await fetch(`${BASE_URL}/teams/`, {
                 ...(data)
-            });
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('返回结果：', data); // ✅ 这里看到 Django 的 Response 返回值
+            })
+            .catch(error => console.error('请求失败：', error));
             //sessionStorage.setItem('response', JSON.stringify(response));
-            const data = await handleResponse(response);
-            // 缓存用户信息
-            if (data.user) {
-                sessionStorage.setItem('userProfile', JSON.stringify(data.status));
-            }
             return await handleResponse(response);
         } catch (error) {
             throw error;

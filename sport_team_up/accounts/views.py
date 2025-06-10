@@ -42,15 +42,24 @@ def register(request):
 @permission_classes([AllowAny])
 def login_view(request):
     print("=====================================================================")
+    if request.user.is_authenticated:
+        print("用户已登录:", request.user)
+    else:
+        print("用户未登录")
     """用户登录"""
     serializer = UserLoginSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.validated_data['user']
         login(request, user)
+        if request.user.is_authenticated:
+            print("用户已登录:", request.user)
+        else:
+            print("用户未登录")
         return Response({
             'message': '登录成功',
             'user': UserProfileSerializer(user).data
         }, status=status.HTTP_200_OK)
+        
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
