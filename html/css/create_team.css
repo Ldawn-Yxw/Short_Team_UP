@@ -1,56 +1,159 @@
-/* 创建表单样式 */
+/* 创建表单样式 - 美化版 */
 .create-team-container {
     min-height: 100vh;
     padding: 2rem;
-    background: linear-gradient(135deg, #0568C1, #1e88e5);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #3498db 100%);
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+}
+
+.create-team-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    pointer-events: none;
 }
 
 .create-team-box {
-    background: white;
-    border-radius: 20px;
-    padding: 2rem;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.9) 100%);
+    border-radius: 25px;
+    padding: 3rem;
     width: 100%;
-    max-width: 800px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.15),
+        0 10px 30px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    z-index: 1;
+}
+
+.create-team-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #3498db, #2ecc71, #f39c12, #e74c3c, #9b59b6);
+    border-radius: 25px 25px 0 0;
 }
 
 .create-team-box h1 {
     text-align: center;
-    color: #333;
-    margin-bottom: 2rem;
-    font-size: 2rem;
+    background: linear-gradient(135deg, #2c3e50, #3498db, #2ecc71);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    position: relative;
+}
+
+.create-team-box h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    border-radius: 2px;
 }
 
 .create-team-form {
-    max-width: 800px;
+    max-width: 850px;
     margin: 0 auto;
-    padding: 1rem;
+    padding: 0;
 }
 
 .form-section {
-    background: white;
-    border-radius: 10px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 249, 250, 0.8) 100%);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.08),
+        0 4px 16px rgba(0, 0, 0, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.form-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3498db, #2ecc71, #f39c12);
+    border-radius: 20px 20px 0 0;
+    opacity: 0.8;
+}
+
+.form-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 15px 45px rgba(0, 0, 0, 0.12),
+        0 8px 25px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .form-section h3 {
-    color: #2c3e50;
-    margin: 0 0 1.5rem 0;
-    font-size: 1.2rem;
-    padding-bottom: 0.8rem;
-    border-bottom: 2px solid #f0f0f0;
+    background: linear-gradient(135deg, #2c3e50, #3498db);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0 0 2rem 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(52, 152, 219, 0.2);
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.8rem;
+    position: relative;
+}
+
+.form-section h3::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    border-radius: 1px;
 }
 
 .form-section h3 i {
-    color: #0568C1;
+    color: #3498db;
+    font-size: 1.3rem;
+    background: rgba(52, 152, 219, 0.1);
+    padding: 0.5rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.form-section:hover h3 i {
+    background: #3498db;
+    color: white;
+    transform: scale(1.1) rotate(5deg);
 }
 
 .form-row {
@@ -60,7 +163,8 @@
 }
 
 .form-group {
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.8rem;
+    position: relative;
 }
 
 .form-group.half {
@@ -69,52 +173,136 @@
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
     color: #2c3e50;
-    font-weight: 500;
-    font-size: 0.9rem;
+    font-weight: 600;
+    font-size: 1rem;
+    position: relative;
+    padding-left: 0.5rem;
+}
+
+.form-group label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(135deg, #3498db, #2ecc71);
+    border-radius: 2px;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 0.8rem;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    border: 2px solid rgba(52, 152, 219, 0.2);
+    border-radius: 15px;
     font-size: 1rem;
-    transition: all 0.3s;
-    background-color: #fff;
+    font-weight: 500;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.05),
+        0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-    border-color: #0568C1;
-    box-shadow: 0 0 0 3px rgba(5, 104, 193, 0.1);
+    border-color: #3498db;
+    box-shadow: 
+        0 0 0 4px rgba(52, 152, 219, 0.15),
+        inset 0 2px 4px rgba(0, 0, 0, 0.05),
+        0 8px 25px rgba(52, 152, 219, 0.1);
     outline: none;
+    transform: translateY(-2px);
+    background: linear-gradient(145deg, #ffffff 0%, rgba(52, 152, 219, 0.02) 100%);
+}
+
+.form-group input:hover,
+.form-group select:hover,
+.form-group textarea:hover {
+    border-color: rgba(52, 152, 219, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.05),
+        0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .form-group textarea {
     resize: vertical;
-    min-height: 120px;
+    min-height: 140px;
+    line-height: 1.6;
+    font-family: inherit;
+}
+
+.form-group select {
+    background-image: linear-gradient(45deg, transparent 50%, #3498db 50%),
+                      linear-gradient(135deg, #3498db 50%, transparent 50%);
+    background-position: calc(100% - 20px) calc(1em + 2px),
+                         calc(100% - 15px) calc(1em + 2px);
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 2.5rem;
+    cursor: pointer;
+}
+
+.form-group select:focus {
+    background-image: linear-gradient(45deg, transparent 50%, #2ecc71 50%),
+                      linear-gradient(135deg, #2ecc71 50%, transparent 50%);
+}
+
+/* 占位符样式 */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #95a5a6;
+    font-style: italic;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus::placeholder,
+.form-group textarea:focus::placeholder {
+    opacity: 0.5;
+    transform: translateX(5px);
 }
 
 .tags-container {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+    margin-top: 0.5rem;
 }
 
 .tag-checkbox {
     display: inline-flex;
     align-items: center;
-    padding: 0.5rem 1.2rem;
-    border: 2px solid #e0e0e0;
-    border-radius: 20px;
+    padding: 0.8rem 1.5rem;
+    border: 2px solid rgba(52, 152, 219, 0.2);
+    border-radius: 25px;
     cursor: pointer;
-    transition: all 0.3s;
-    background-color: white;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    box-shadow: 
+        0 3px 10px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    position: relative;
+    overflow: hidden;
+}
+
+.tag-checkbox::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.1), transparent);
+    transition: left 0.5s;
 }
 
 .tag-checkbox input[type="checkbox"] {
@@ -123,77 +311,212 @@
 
 .tag-checkbox span {
     color: #2c3e50;
-    font-weight: 500;
-    font-size: 0.9rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
 }
 
 .tag-checkbox:hover {
-    border-color: #0568C1;
-    background-color: rgba(5, 104, 193, 0.05);
+    border-color: #3498db;
+    background: linear-gradient(145deg, rgba(52, 152, 219, 0.05) 0%, rgba(52, 152, 219, 0.02) 100%);
+    transform: translateY(-2px);
+    box-shadow: 
+        0 8px 20px rgba(52, 152, 219, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.tag-checkbox:hover::before {
+    left: 100%;
 }
 
 .tag-checkbox input[type="checkbox"]:checked + span {
-    color: #0568C1;
+    color: white;
+}
+
+.tag-checkbox:has(input[type="checkbox"]:checked) {
+    background: linear-gradient(135deg, #3498db, #2ecc71);
+    border-color: #2980b9;
+    box-shadow: 
+        0 6px 18px rgba(52, 152, 219, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.tag-checkbox:has(input[type="checkbox"]:checked):hover {
+    background: linear-gradient(135deg, #2980b9, #27ae60);
+    transform: translateY(-3px);
+    box-shadow: 
+        0 10px 25px rgba(52, 152, 219, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .form-error {
     color: #e74c3c;
     text-align: center;
-    min-height: 1.5rem;
-    margin: 1rem 0;
-    font-size: 0.9rem;
+    min-height: 2rem;
+    margin: 1.5rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(192, 57, 43, 0.05));
+    padding: 1rem;
+    border-radius: 15px;
+    border-left: 4px solid #e74c3c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.form-error:not(:empty)::before {
+    content: '⚠️';
+    font-size: 1.2rem;
 }
 
 .form-actions {
     display: flex;
     justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 2rem;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid rgba(52, 152, 219, 0.1);
 }
 
 .btn-cancel,
 .btn-create {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.8rem 1.5rem;
-    border-radius: 8px;
-    font-weight: 500;
+    gap: 0.8rem;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-weight: 600;
     font-size: 1rem;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    min-width: 140px;
+    justify-content: center;
 }
 
 .btn-cancel {
-    background: none;
-    border: 2px solid #95a5a6;
-    color: #95a5a6;
+    background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+    border: none;
+    color: white;
+    box-shadow: 0 4px 15px rgba(149, 165, 166, 0.3);
 }
 
 .btn-cancel:hover {
-    background: #95a5a6;
-    color: white;
+    background: linear-gradient(135deg, #7f8c8d, #95a5a6);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(149, 165, 166, 0.4);
+}
+
+.btn-cancel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-cancel:hover::before {
+    left: 100%;
 }
 
 .btn-create {
-    background: #0568C1;
+    background: linear-gradient(135deg, #3498db, #2ecc71);
     border: none;
     color: white;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    position: relative;
 }
 
 .btn-create:hover {
-    background: #045aa8;
-    transform: translateY(-2px);
+    background: linear-gradient(135deg, #2980b9, #27ae60);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
 }
 
-/* 响应式设计 */
+.btn-create::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-create:hover::before {
+    left: 100%;
+}
+
+.btn-create:disabled {
+    background: linear-gradient(135deg, #bdc3c7, #95a5a6);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 2px 8px rgba(189, 195, 199, 0.3);
+}
+
+.btn-create:disabled:hover {
+    transform: none;
+    box-shadow: 0 2px 8px rgba(189, 195, 199, 0.3);
+}
+
+.btn-create i,
+.btn-cancel i {
+    transition: all 0.3s ease;
+}
+
+.btn-create:hover i,
+.btn-cancel:hover i {
+    transform: scale(1.2);
+}
+
+/* 响应式设计 - 美化版 */
 @media (max-width: 768px) {
+    .create-team-container {
+        padding: 1rem;
+    }
+
+    .create-team-box {
+        padding: 2rem 1.5rem;
+        border-radius: 20px;
+        margin: 0;
+    }
+
     .create-team-form {
-        padding: 0.5rem;
+        padding: 0;
     }
 
     .form-section {
-        padding: 1rem;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border-radius: 15px;
+    }
+
+    .form-section h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 0.8rem 1rem;
+        border-radius: 12px;
     }
 
     .form-row {
@@ -203,12 +526,17 @@
 
     .form-actions {
         flex-direction: column-reverse;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
     }
 
     .btn-cancel,
     .btn-create {
         width: 100%;
         justify-content: center;
+        padding: 1rem;
+        font-size: 0.9rem;
     }
 
     .tags-container {
@@ -218,19 +546,22 @@
     .tag-checkbox {
         padding: 0.4rem 0.8rem;
         font-size: 0.8rem;
+        border-radius: 15px;
     }
 }
 
-/* 页面标题 */
+/* 页面标题 - 美化版 */
 .page-title {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 2rem 0;
-    background: linear-gradient(135deg, #0568C1, #045aa8);
+    padding: 3rem 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #3498db 100%);
     margin: 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.15),
+        0 4px 16px rgba(0, 0, 0, 0.1);
     position: relative;
     overflow: hidden;
 }
@@ -242,51 +573,85 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
     pointer-events: none;
 }
 
+.page-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #3498db, #2ecc71, #f39c12, #e74c3c, #9b59b6);
+}
+
 .page-title h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: white;
     margin: 0;
     display: flex;
     align-items: center;
-    gap: 1rem;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    gap: 1.2rem;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     position: relative;
     z-index: 1;
+    font-weight: 700;
 }
 
 .page-title h1 i {
-    color: #fdc500;
-    font-size: 2.2rem;
-    animation: pulse 2s infinite;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    color: #f39c12;
+    font-size: 2.8rem;
+    animation: bounceRotate 3s ease-in-out infinite;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    background: linear-gradient(135deg, #f39c12, #e74c3c);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-@keyframes pulse {
-    0% {
-        transform: scale(1);
+@keyframes bounceRotate {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+    }
+    25% {
+        transform: scale(1.1) rotate(-5deg);
     }
     50% {
-        transform: scale(1.1);
+        transform: scale(1.15) rotate(0deg);
     }
-    100% {
-        transform: scale(1);
+    75% {
+        transform: scale(1.1) rotate(5deg);
     }
 }
 
 /* 调整顶部栏样式以适应新标题 */
 .top-bar {
     justify-content: flex-end;
-    padding-right: 2rem;
-    background: transparent;
-    box-shadow: none;
-    z-index: 2;
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    z-index: 10;
     position: absolute;
     top: 1rem;
-    right: 0;
+    right: 1rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.top-bar .user-menu {
+    color: rgb(39, 21, 101);
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 /* 内容区域调整 */
@@ -294,31 +659,70 @@
     padding: 2rem;
     position: relative;
     z-index: 1;
+    margin-top: 1rem;
 }
 
-/* 响应式调整 */
+/* 页面标题响应式调整 */
 @media (max-width: 768px) {
     .page-title {
-        margin: 0;
+        padding: 2rem 1rem;
+    }
+
+    .page-title h1 {
+        font-size: 1.8rem;
+        text-align: center;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .page-title h1 i {
+        font-size: 2rem;
+    }
+
+    .top-bar {
+        padding: 0.8rem 1rem;
+        top: 0.5rem;
+        right: 0.5rem;
+        border-radius: 10px;
+    }
+
+    .top-bar .user-menu {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+        border-radius: 15px;
+    }
+
+    .content-wrapper {
+        padding: 1rem;
+        margin-top: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .create-team-box {
         padding: 1.5rem 1rem;
     }
 
     .page-title h1 {
         font-size: 1.5rem;
-        text-align: center;
-        flex-wrap: wrap;
-        justify-content: center;
     }
 
     .page-title h1 i {
         font-size: 1.8rem;
     }
 
-    .top-bar {
-        padding-right: 1rem;
+    .form-section {
+        padding: 1rem;
     }
 
-    .content-wrapper {
-        padding: 1.5rem 1rem;
+    .form-section h3 {
+        font-size: 1.1rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 0.7rem 0.8rem;
     }
 } 
