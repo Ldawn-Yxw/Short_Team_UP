@@ -31,9 +31,9 @@
                 <div class="main-hotair">
                     <div class="content-wthree">
                         <h2>登录</h2>
-                        <form action="#" method="post">
-                            <input type="text" class="text" name="text" placeholder="用户" required="" autofocus>
-                            <input type="password" class="password" name="password" placeholder="密码" required="" autofocus>
+                        <form action="#" method="post" id="loginForm">
+                            <input type="text" class="text" name="text" placeholder="用户" id="username" required="" autofocus>
+                            <input type="password" class="password" name="password" id="password" placeholder="密码" required="" autofocus>
                             <button class="btn" type="submit">登录</button>
                         </form>
                         
@@ -55,6 +55,26 @@
         <!-- //copyright-->
     </section>
     <!-- //form section start -->
+
+    <script src="js/api.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            // const errorElement = document.getElementById('loginError');
+            // errorElement.textContent = '';
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                // const response = await api.login(username, password);
+                // 登录成功，跳转到主页
+                window.location.href = 'D:\\sport_system\\Short_Team_UP\\html\\main.html';
+            } catch (error) {
+                errorElement.textContent = error.message;
+            }
+        });
+    </script>
 </body>
 
 </html>
