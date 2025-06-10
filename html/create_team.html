@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创建组队 - 运动组队系统</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/create_team.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <!-- 左侧导航栏 -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-running"></i>
+            <span>运动组队系统</span>
+        </div>
+        <div class="sidebar-menu">
+            <a href="main.html">
+                <i class="fas fa-home"></i>
+                <span>首页</span>
+            </a>
+            <a href="create_team.html" class="active">
+                <i class="fas fa-plus-circle"></i>
+                <span>创建组队</span>
+            </a>
+            <a href="my_teams.html">
+                <i class="fas fa-user-friends"></i>
+                <span>我的组队</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- 主要内容区 -->
+    <main class="main-content">
+        <!-- 顶部栏 -->
+        <header class="top-bar">
+            <div class="page-title">
+                <h1><i class="fas fa-plus-circle"></i> 创建新的运动组队</h1>
+            </div>
+            <div class="user-menu">
+                <span class="username" id="username">用户名</span>
+            </div>
+        </header>
+
+        <!-- 内容区域 -->
+        <div class="content-wrapper">
+            <form id="createTeamForm" class="create-team-form">
+                <!-- 基本信息 -->
+                <div class="form-section">
+                    <h3><i class="fas fa-info-circle"></i> 基本信息</h3>
+                    <div class="form-group">
+                        <label for="title">活动标题</label>
+                        <input type="text" id="title" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sport_type">运动类型</label>
+                        <select id="sport_type" name="sport_type" required>
+                            <option value="">请选择运动类型</option>
+                            <option value="basketball">篮球</option>
+                            <option value="football">足球</option>
+                            <option value="pingpong">乒乓球</option>
+                            <option value="running">跑步</option>
+                            <option value="volleyball">排球</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 时间地点 -->
+                <div class="form-section">
+                    <h3><i class="fas fa-calendar-alt"></i> 时间地点</h3>
+                    <div class="form-group">
+                        <label for="start_time">开始时间</label>
+                        <input type="datetime-local" id="start_time" name="start_time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="end_time">结束时间</label>
+                        <input type="datetime-local" id="end_time" name="end_time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">活动地点</label>
+                        <input type="text" id="location" name="location" required>
+                    </div>
+                </div>
+
+                <!-- 人数和要求 -->
+                <div class="form-section">
+                    <h3><i class="fas fa-users"></i> 人数和要求</h3>
+                    <div class="form-group">
+                        <label for="target_number">目标人数</label>
+                        <input type="number" id="target_number" name="target_number" min="2" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="requirements">活动要求</label>
+                        <textarea id="requirements" name="requirements" rows="4" required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-error" id="createTeamError"></div>
+                
+                <!-- 提交按钮 -->
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="window.location.href='main.html'">
+                        <i class="fas fa-times"></i> 取消
+                    </button>
+                    <button type="submit" class="btn-create">
+                        <i class="fas fa-check"></i> 创建组队
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/create_team.js"></script>
+</body>
+</html> 
