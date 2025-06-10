@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Team, Registration
+from .models import Team, Registration, Notification
 from accounts.serializers import UserProfileSerializer
 
 class TeamCreateSerializer(serializers.ModelSerializer):
@@ -121,3 +121,10 @@ class TeamMemberSerializer(serializers.ModelSerializer):
             registration_time__lt=obj.registration_time
         ).count()
         return earlier_members + 1 
+
+class NotificationSerializer(serializers.ModelSerializer):
+    """消息通知序列化器"""
+    
+    class Meta:
+        model = Notification
+        fields = ('id', 'type', 'title', 'content', 'is_read', 'created_at') 

@@ -7,8 +7,8 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from .models import Team, Registration
-from .serializers import TeamCreateSerializer, TeamListSerializer, TeamDetailSerializer, TeamMemberSerializer
+from .models import Team, Registration, Notification
+from .serializers import TeamCreateSerializer, TeamListSerializer, TeamDetailSerializer, TeamMemberSerializer, NotificationSerializer
 # Create your views here.
 
 @csrf_exempt
@@ -60,6 +60,13 @@ def teams(request):
         serializer = TeamCreateSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             team = serializer.save()
+            # 创建组队成功通知
+            create_notification(
+                user=request.user,
+                type='team_created',
+                title='创建组队成功',
+                content=f'您已成功创建组队"{team.title}"'
+            )
             return Response(
                 TeamDetailSerializer(team, context={'request': request}).data,
                 status=status.HTTP_201_CREATED
@@ -123,6 +130,14 @@ def join_team(request, team_id):
     ).count()
     team.save()
     
+    # 添加加入组队成功通知
+    create_notification(
+        user=user,
+        type='team_joined',
+        title='加入组队成功',
+        content=f'您已成功加入组队"{team.title}"'
+    )
+    
     return Response({'message': '成功加入组队'}, status=status.HTTP_200_OK)
 
 @csrf_exempt
@@ -158,6 +173,14 @@ def leave_team(request, team_id):
     ).count()
     team.save()
     
+    # 添加退出组队成功通知
+    create_notification(
+        user=user,
+        type='team_left',
+        title='退出组队成功',
+        content=f'您已成功退出组队"{team.title}"'
+    )
+    
     return Response({'message': '成功退出组队'}, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
@@ -187,7 +210,60 @@ def delete_team(request, team_id):
     if team.creator != user:
         return Response({'error': '只有创建者可以删除组队'}, status=status.HTTP_403_FORBIDDEN)
     
+    # 获取所有组队成员（除了创建者）
+    members = Registration.objects.filter(team=team, status='joined').exclude(user=user)
+    
+    # 给所有成员发送组队解散通知
+    for registration in members:
+        create_notification(
+            user=registration.user,
+            type='team_disbanded',
+            title='组队已解散',
+            content=f'您加入的组队"{team.title}"已被创建者解散'
+        )
+    
+    # 给创建者发送删除成功通知
+    create_notification(
+        user=user,
+        type='team_deleted',
+        title='删除组队成功',
+        content=f'您已成功删除组队"{team.title}"'
+    )
+    
     # 删除组队（这会自动删除相关的registration记录，因为我们使用了外键的CASCADE）
     team.delete()
     
     return Response({'message': '成功删除组队'}, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def notifications(request):
+    """获取用户的消息通知列表"""
+    notifications = Notification.objects.filter(user=request.user)
+    serializer = NotificationSerializer(notifications, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def mark_notification_read(request, notification_id):
+    """标记消息为已读"""
+    notification = get_object_or_404(Notification, id=notification_id, user=request.user)
+    notification.is_read = True
+    notification.save()
+    return Response({'message': '已标记为已读'})
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def unread_count(request):
+    """获取未读消息数量"""
+    count = Notification.objects.filter(user=request.user, is_read=False).count()
+    return Response({'count': count})
+
+def create_notification(user, type, title, content):
+    """创建消息通知的辅助函数"""
+    Notification.objects.create(
+        user=user,
+        type=type,
+        title=title,
+        content=content
+    )

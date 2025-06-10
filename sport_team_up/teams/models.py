@@ -87,3 +87,32 @@ class Registration(models.Model):
     
     def __str__(self):
         return f"{self.user.username} - {self.team.title} - {self.status}"
+
+
+class Notification(models.Model):
+    """消息通知模型"""
+    
+    TYPE_CHOICES = [
+        ('team_created', '创建组队'),
+        ('team_joined', '加入组队'),
+        ('team_left', '退出组队'),
+        ('team_deleted', '删除组队'),
+        ('team_disbanded', '组队解散'),
+    ]
+    
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, 
+                            related_name='notifications', verbose_name='接收用户')
+    type = models.CharField(max_length=20, choices=TYPE_CHOICES, verbose_name='通知类型')
+    title = models.CharField(max_length=100, verbose_name='通知标题')
+    content = models.TextField(verbose_name='通知内容')
+    is_read = models.BooleanField(default=False, verbose_name='是否已读')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    
+    class Meta:
+        verbose_name = '消息通知'
+        verbose_name_plural = '消息通知'
+        db_table = 'teams_notification'
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.title}"
