@@ -30,6 +30,15 @@
                 <i class="fas fa-user-friends"></i>
                 <span>我的组队</span>
             </a>
+            <a href="notifications.html">
+                <i class="fas fa-bell"></i>
+                <span>消息通知</span>
+                <span class="notification-badge" id="notificationCount"></span>
+            </a>
+            <a href="profile.html" class="active">
+                <i class="fas fa-user"></i>
+                <span>个人中心</span>
+            </a>
         </div>
     </nav>
 
@@ -41,7 +50,10 @@
                 <h1><i class="fas fa-user-cog"></i> 个人资料</h1>
             </div>
             <div class="user-menu">
-                <span class="username" id="username">用户名</span>
+                <a href="profile.html" class="profile-link">
+                    <i class="fas fa-user-circle"></i>
+                    <span class="username" id="username">用户名</span>
+                </a>
             </div>
         </header>
 
@@ -125,6 +137,7 @@
     </main>
 
     <script src="js/api.js"></script>
+    <script src="js/common.js"></script>
     <script src="js/profile.js"></script>
 </body>
 </html> 

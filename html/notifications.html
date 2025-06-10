@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的组队 - 运动组队系统</title>
+    <title>消息通知 - 运动组队系统</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/my_teams.css">
+    <link rel="stylesheet" href="css/notifications.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
@@ -26,11 +26,11 @@
                 <i class="fas fa-plus-circle"></i>
                 <span>创建组队</span>
             </a>
-            <a href="my_teams.html" class="active">
+            <a href="my_teams.html">
                 <i class="fas fa-user-friends"></i>
                 <span>我的组队</span>
             </a>
-            <a href="notifications.html">
+            <a href="notifications.html" class="active">
                 <i class="fas fa-bell"></i>
                 <span>消息通知</span>
                 <span class="notification-badge" id="notificationCount"></span>
@@ -56,30 +56,45 @@
 
         <!-- 内容区域 -->
         <div class="content-wrapper">
-            <!-- 组队列表 -->
-            <div class="teams-section">
+            <!-- 通知筛选 -->
+            <section class="notification-filters-section">
                 <div class="section-header">
-                    <h2>组队列表</h2>
-                    <div class="tab-buttons">
-                        <button class="tab-btn active" data-type="created">
-                            <i class="fas fa-crown"></i>
-                            <span>我创建的</span>
-                        </button>
-                        <button class="tab-btn" data-type="joined">
-                            <i class="fas fa-user-friends"></i>
-                            <span>我参与的</span>
-                        </button>
-                    </div>
+                    <h2>消息通知</h2>
+                    <button class="btn-primary mark-all-read" onclick="markAllAsRead()">
+                        <i class="fas fa-check-double"></i>
+                        全部标记为已读
+                    </button>
                 </div>
-                <div class="team-cards" id="teamList">
-                    <!-- 组队卡片将由JavaScript动态生成 -->
+                <div class="category-list">
+                    <button class="category-item active" data-type="all">
+                        <i class="fas fa-list"></i>
+                        <span>全部通知</span>
+                    </button>
+                    <button class="category-item" data-type="unread">
+                        <i class="fas fa-envelope"></i>
+                        <span>未读消息</span>
+                    </button>
+                    <button class="category-item" data-type="team">
+                        <i class="fas fa-users"></i>
+                        <span>组队相关</span>
+                    </button>
                 </div>
-            </div>
+            </section>
+
+            <!-- 通知列表 -->
+            <section class="notification-list">
+                <div class="section-header">
+                    <h2>通知列表</h2>
+                </div>
+                <div class="team-cards" id="notificationsList">
+                    <!-- 通知卡片将由JavaScript动态生成 -->
+                </div>
+            </section>
         </div>
     </main>
 
     <script src="js/api.js"></script>
     <script src="js/common.js"></script>
-    <script src="js/my_teams.js"></script>
+    <script src="js/notifications.js"></script>
 </body>
 </html> 

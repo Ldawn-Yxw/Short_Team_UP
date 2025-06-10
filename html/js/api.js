@@ -1,6 +1,5 @@
-// API基础URL - 根据当前域名自动调整
-const BASE_URL = window.location.hostname === '127.0.0.1' ? 
-    'http://127.0.0.1:8000/api' : 'http://localhost:8000/api';
+// API配置
+const BASE_URL = 'http://127.0.0.1:8000/api';
 
 // 获取CSRF Token
 function getCSRFToken() {
@@ -404,6 +403,42 @@ const api = {
                 ...(await getRequestConfig('DELETE'))
             });
             
+            return await handleResponse(response);
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    // 获取消息通知列表
+    getNotifications: async () => {
+        try {
+            const response = await fetch(`${BASE_URL}/teams/notifications/`, {
+                ...(await getRequestConfig('GET'))
+            });
+            return await handleResponse(response);
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    // 获取未读消息数量
+    getUnreadCount: async () => {
+        try {
+            const response = await fetch(`${BASE_URL}/teams/notifications/unread/`, {
+                ...(await getRequestConfig('GET'))
+            });
+            return await handleResponse(response);
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    // 标记消息为已读
+    markNotificationRead: async (notificationId) => {
+        try {
+            const response = await fetch(`${BASE_URL}/teams/notifications/${notificationId}/read/`, {
+                ...(await getRequestConfig('POST'))
+            });
             return await handleResponse(response);
         } catch (error) {
             throw error;

@@ -1,0 +1,32 @@
+🚀 运动组队系统 - 超简单部署指南
+
+📋 你只需要做这几步：
+
+1️⃣ 买云服务器
+   - 去阿里云/腾讯云买个2核4G的服务器
+   - 选择Ubuntu 20.04系统
+   - 大约60-80元/月
+   - 记住服务器IP和root密码
+
+2️⃣ 连接服务器
+   - Windows: 下载PuTTY连接
+   - Mac/Linux: 终端输入 ssh root@你的IP
+
+3️⃣ 一键部署
+   复制粘贴这3行命令：
+   
+   wget https://raw.githubusercontent.com/Ldawn-Yxw/Short_Team_UP/main/quick_deploy.sh
+   chmod +x quick_deploy.sh
+   ./quick_deploy.sh 你的域名.com 你的服务器IP
+   
+   (如果没域名，两个地方都填服务器IP)
+
+4️⃣ 等待5-10分钟完成
+
+5️⃣ 访问网站
+   - 网址: http://你的域名 或 http://你的IP
+   - 管理员: admin / admin123
+
+🎉 完成！同学们现在可以访问你的运动组队网站了！
+
+💡 没域名？直接用IP访问也可以，比如: http://123.456.789.123 
