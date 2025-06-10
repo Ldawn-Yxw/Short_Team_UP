@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 绑定事件
     bindEvents();
     
+    // 检查是否有新创建的组队
+    checkNewTeam();
+    
     // 加载组队列表
     await loadTeams();
 });
@@ -20,18 +23,18 @@ async function loadUserProfile() {
     try {
         // 使用新的认证检查API
         const authResult = await api.checkAuth();
-        console.log('认证检查结果:', authRe sult);
+        console.log('认证检查结果:', authResult);
         
-        // if (authResult.authenticated && authResult.user) {
-        //     document.getElementById('username').textContent = authResult.user.username;
-        //     // 缓存用户信息
-        //     sessionStorage.setItem('userProfile', JSON.stringify(authResult.user));
-        //     console.log('用户已认证:', authResult.user.username);
-        // } else {
-        //     console.log('用户未认证，跳转到登录页');
-        //     alert('请先登录');
-        //     window.location.href = 'index.html';
-        // }
+        if (authResult.authenticated && authResult.user) {
+            document.getElementById('username').textContent = authResult.username;
+            // 缓存用户信息
+            sessionStorage.setItem('userProfile', JSON.stringify(authResult.user));
+            console.log('用户已认证:', authResult.usr.username);
+        } else {
+            console.log('用户未认证，跳转到登录页');
+            alert('请先登录');
+            window.location.href = 'index.html';
+        }
     } catch (error) {
         console.error('认证检查失败:', error);
         
@@ -50,6 +53,17 @@ async function loadUserProfile() {
         
         alert('认证检查失败，请重新登录');
         window.location.href = 'index.html';
+    }
+}
+
+// 检查是否有新创建的组队
+function checkNewTeam() {
+    const newTeamCreated = sessionStorage.getItem('newTeamCreated');
+    if (newTeamCreated === 'true') {
+        // 清除标记
+        sessionStorage.removeItem('newTeamCreated');
+        // 显示成功提示
+        console.log('检测到新创建的组队，列表将自动更新');
     }
 }
 
@@ -72,7 +86,9 @@ function bindEvents() {
     
     // 搜索功能
     const searchInput = document.querySelector('.search-box input');
-    searchInput.addEventListener('input', debounce(handleSearch, 300));
+    if (searchInput) {
+        searchInput.addEventListener('input', debounce(handleSearch, 300));
+    }
 }
 
 // 加载组队列表

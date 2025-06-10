@@ -134,7 +134,9 @@ async function handleFormSubmit(e) {
     
     try {
         const team = await api.createTeam(formData);
-        // 创建成功，直接跳转到主页面（模仿注册逻辑）
+        // 设置刷新标记，通知主页面有新组队
+        sessionStorage.setItem('newTeamCreated', 'true');
+        // 创建成功，跳转到主页面
         window.location.href = 'main.html';
     } catch (error) {
         errorElement.textContent = error.message;
