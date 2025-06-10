@@ -5,11 +5,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from .models import Team, Registration
 from .serializers import TeamCreateSerializer, TeamListSerializer, TeamDetailSerializer
-
 # Create your views here.
 
+@csrf_exempt
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def teams(request):
@@ -72,6 +74,7 @@ def team_detail(request, team_id):
     serializer = TeamDetailSerializer(team, context={'request': request})
     return Response(serializer.data)
 
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def join_team(request, team_id):
@@ -122,6 +125,7 @@ def join_team(request, team_id):
     
     return Response({'message': '成功加入组队'}, status=status.HTTP_200_OK)
 
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def leave_team(request, team_id):

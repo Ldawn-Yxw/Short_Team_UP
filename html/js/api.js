@@ -1,5 +1,6 @@
-// API基础URL
-const BASE_URL = 'http://localhost:8000/api';
+// API基础URL - 根据当前域名自动调整
+const BASE_URL = window.location.hostname === '127.0.0.1' ? 
+    'http://127.0.0.1:8000/api' : 'http://localhost:8000/api';
 
 // 获取CSRF Token
 function getCSRFToken() {
@@ -65,6 +66,10 @@ const getRequestConfig = async (method = 'GET', data = null) => {
         config.body = JSON.stringify(data);
     }
 
+    // 调试：打印cookie信息
+    console.log('当前Cookie:', document.cookie);
+    console.log('请求配置:', config);
+
     return config;
 };
 
@@ -80,21 +85,21 @@ const handleResponse = async (response) => {
         const data = await response.json();
         console.log('Response data:', data);
         
-        // if (!response.ok) {
-        //     if (response.status === 403) {
-        //         // CSRF token 失效或未登录
-        //         console.error('403 Forbidden - 认证失败');
-        //         throw new Error('认证失败，请检查登录状态');
-        //     }
-        //     if (data.non_field_errors) {
-        //         throw new Error(data.non_field_errors[0]);
-        //     }
-        //     if (typeof data === 'object' && Object.keys(data).length > 0) {
-        //         const firstError = Object.values(data)[0];
-        //         throw new Error(Array.isArray(firstError) ? firstError[0] : firstError);
-        //     }
-        //     throw new Error(data.message || '操作失败');
-        // }
+        if (!response.ok) {
+            if (response.status === 403) {
+                // CSRF token 失效或未登录
+                console.error('403 Forbidden - 认证失败');
+                throw new Error('认证失败，请检查登录状态');
+            }
+            if (data.non_field_errors) {
+                throw new Error(data.non_field_errors[0]);
+            }
+            if (typeof data === 'object' && Object.keys(data).length > 0) {
+                const firstError = Object.values(data)[0];
+                throw new Error(Array.isArray(firstError) ? firstError[0] : firstError);
+            }
+            throw new Error(data.message || '操作失败');
+        }
         return data;
     } else {
         // 如果不是JSON响应，获取文本内容进行调试
@@ -124,12 +129,19 @@ const api = {
                 ...(await getRequestConfig('POST', { username, password }))
             });
 
-            
             const data = await handleResponse(response);
+            
+            // 登录成功后检查Cookie
+            console.log('登录后的Cookie:', document.cookie);
+            const hasSessionId = document.cookie.includes('sessionid');
+            console.log('登录后是否有sessionid:', hasSessionId);
+            
             // 缓存用户信息
             if (data.user) {
                 sessionStorage.setItem('userProfile', JSON.stringify(data.user));
+                console.log('用户信息已缓存:', data.user.username);
             }
+            
             return data;
         } catch (error) {
             throw error;
@@ -142,7 +154,6 @@ const api = {
             const response = await fetch(`${BASE_URL}/accounts/register/`, {
                 ...(await getRequestConfig('POST', userData))
             });
-            
             const data = await handleResponse(response);
             // console.log(data.user.BASE_URL);
             // alert('注册成功');
@@ -172,18 +183,19 @@ const api = {
     // 创建组队
     createTeam: async (teamData) => {
         try {
-            data = await getRequestConfig('POST', teamData)
-            sessionStorage.setItem('data', JSON.stringify(data));
             const response = await fetch(`${BASE_URL}/teams/`, {
-                ...(data)
+                ...(await getRequestConfig('POST', teamData))
             });
-            //sessionStorage.setItem('response', JSON.stringify(response));
+            
             const data = await handleResponse(response);
-            // 缓存用户信息
-            if (data.user) {
-                sessionStorage.setItem('userProfile', JSON.stringify(data.status));
+            console.log('组队创建成功:', data);
+            
+            // 缓存最新创建的团队信息（可选）
+            if (data.id) {
+                sessionStorage.setItem('latestTeam', JSON.stringify(data));
             }
-            return await handleResponse(response);
+            
+            return data;
         } catch (error) {
             throw error;
         }
@@ -297,13 +309,65 @@ const api = {
     // 检查认证状态
     checkAuth: async () => {
         try {
+            console.log('正在检查用户认证状态...');
+            console.log('发送认证检查请求时的Cookie:', document.cookie);
+            
             const response = await fetch(`${BASE_URL}/accounts/check-auth/`, {
                 ...(await getRequestConfig('GET'))
             });
             
-            return await handleResponse(response);
+            console.log('认证检查响应状态:', response.status);
+            
+            if (!response.ok) {
+                console.error('认证检查失败，状态码:', response.status);
+                // 如果是403，说明没有有效的session
+                if (response.status === 403) {
+                    console.log('提示：Cookie中可能没有有效的sessionid，需要重新登录');
+                }
+                throw new Error('用户未登录或登录已过期');
+            }
+            
+            const result = await handleResponse(response);
+            console.log('认证检查成功:', result);
+            return result;
         } catch (error) {
+            console.error('认证检查异常:', error);
             throw error;
+        }
+    },
+
+    // 检查Cookie状态（调试用）
+    checkCookieStatus: () => {
+        const cookies = document.cookie;
+        const hasSessionId = cookies.includes('sessionid');
+        console.log('=== Cookie状态检查 ===');
+        console.log('所有Cookie:', cookies);
+        console.log('是否有sessionid:', hasSessionId);
+        console.log('SessionStorage用户信息:', sessionStorage.getItem('userProfile'));
+        console.log('当前域名:', window.location.hostname);
+        console.log('当前端口:', window.location.port);
+        console.log('API BASE_URL:', BASE_URL);
+        return { cookies, hasSessionId };
+    },
+
+    // 调试登录状态（强制检查）
+    debugLogin: async () => {
+        console.log('=== 调试登录状态 ===');
+        try {
+            console.log('1. 当前Cookie:', document.cookie);
+            console.log('2. 尝试获取用户资料...');
+            const profile = await api.getUserProfile();
+            console.log('3. 用户资料获取成功:', profile);
+            return profile;
+        } catch (error) {
+            console.log('3. 用户资料获取失败:', error.message);
+            console.log('4. 尝试检查认证状态...');
+            try {
+                const auth = await api.checkAuth();
+                console.log('5. 认证检查成功:', auth);
+            } catch (authError) {
+                console.log('5. 认证检查失败:', authError.message);
+            }
         }
     },
 }; 

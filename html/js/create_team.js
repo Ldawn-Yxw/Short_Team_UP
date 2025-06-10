@@ -13,12 +13,38 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // 加载用户信息
 async function loadUserProfile() {
+    // 先检查Cookie状态
+    console.log('当前所有Cookie:', document.cookie);
+    console.log('SessionStorage用户信息:', sessionStorage.getItem('userProfile'));
+    
+    // 检查是否有sessionid cookie
+    const hasSessionId = document.cookie.includes('sessionid');
+    console.log('是否有sessionid cookie:', hasSessionId);
+    
+    // 先检查登录状态
+    try {
+        console.log('检查用户登录状态...');
+        const authStatus = await api.checkAuth();
+        console.log('用户已登录:', authStatus);
+    } catch (authError) {
+        console.error('用户未登录:', authError);
+        console.log('登录状态检查失败，需要重新登录');
+        
+        // 清除过期的SessionStorage
+        sessionStorage.removeItem('userProfile');
+        
+        alert('登录已过期，请重新登录');
+        window.location.href = 'index.html';
+        return;
+    }
+    
     // 先尝试从缓存获取用户信息
     const cachedProfile = sessionStorage.getItem('userProfile');
     if (cachedProfile) {
         try {
             const userProfile = JSON.parse(cachedProfile);
             document.getElementById('username').textContent = userProfile.username;
+            console.log('从缓存加载用户信息:', userProfile.username);
             return;
         } catch (e) {
             console.error('解析缓存用户信息失败:', e);
@@ -32,6 +58,7 @@ async function loadUserProfile() {
         
         // 缓存用户信息
         sessionStorage.setItem('userProfile', JSON.stringify(userProfile));
+        console.log('从API加载用户信息:', userProfile.username);
     } catch (error) {
         console.error('加载用户信息失败:', error);
         // 如果没有缓存且API调用失败，则跳转到登录页
@@ -107,8 +134,7 @@ async function handleFormSubmit(e) {
     
     try {
         const team = await api.createTeam(formData);
-        alert('组队创建成功！');
-        // 跳转到主页面
+        // 创建成功，直接跳转到主页面（模仿注册逻辑）
         window.location.href = 'main.html';
     } catch (error) {
         errorElement.textContent = error.message;

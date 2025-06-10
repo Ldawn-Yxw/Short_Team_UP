@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+from rest_framework.authentication import SessionAuthentication
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -142,10 +143,15 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# 自定义Session认证类（不检查CSRF）
+class CsrfExemptSessionAuthentication(SessionAuthentication):
+    def enforce_csrf(self, request):
+        return  # 跳过CSRF检查
+
 # REST Framework设置
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
+        'sport_team_up.settings.CsrfExemptSessionAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
@@ -172,15 +178,20 @@ CORS_ALLOWED_HEADERS = [
     'x-requested-with',
 ]
 
-# CSRF设置
-CSRF_COOKIE_SAMESITE = None
-SESSION_COOKIE_SAMESITE = None
-CSRF_COOKIE_HTTPONLY = False
-CSRF_USE_SESSIONS = False
-CSRF_COOKIE_NAME = 'csrftoken'
-CSRF_COOKIE_SECURE = False
-CSRF_TRUSTED_ORIGINS = ['http://localhost:8000', 'http://127.0.0.1:8000']
-CSRF_FAILURE_VIEW = 'django.views.csrf.csrf_failure'
+# CSRF设置 - 开发环境完全禁用
+# CSRF_COOKIE_SAMESITE = None
+# SESSION_COOKIE_SAMESITE = None
+# CSRF_COOKIE_HTTPONLY = False
+# CSRF_USE_SESSIONS = False
+# CSRF_COOKIE_NAME = 'csrftoken'
+# CSRF_COOKIE_SECURE = False
+# CSRF_TRUSTED_ORIGINS = [
+#     'http://localhost:8000', 
+#     'http://127.0.0.1:8000',
+#     'http://localhost:5500',    # 前端地址
+#     'http://127.0.0.1:5500'     # 前端地址
+# ]
+# CSRF_FAILURE_VIEW = 'django.views.csrf.csrf_failure'
 
 # Session设置
 SESSION_COOKIE_AGE = 86400  # 24小时
