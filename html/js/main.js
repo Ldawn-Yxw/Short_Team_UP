@@ -116,8 +116,26 @@ async function loadTeams() {
             return;
         }
         
+        // 对组队列表进行排序：未结束的在前，已结束的在后
+        const sortedTeams = teams.sort((a, b) => {
+            const now = new Date();
+            const aEndTime = new Date(a.end_time);
+            const bEndTime = new Date(b.end_time);
+            
+            const aIsEnded = aEndTime < now;
+            const bIsEnded = bEndTime < now;
+            
+            // 如果一个已结束，一个未结束，未结束的排在前面
+            if (aIsEnded !== bIsEnded) {
+                return aIsEnded ? 1 : -1;
+            }
+            
+            // 如果都是同一状态，按创建时间倒序（最新的在前）
+            return new Date(b.created_at || b.id) - new Date(a.created_at || a.id);
+        });
+        
         // 渲染组队卡片
-        teamCards.innerHTML = teams.map(team => createTeamCard(team)).join('');
+        teamCards.innerHTML = sortedTeams.map(team => createTeamCard(team)).join('');
         
     } catch (error) {
         console.error('加载组队列表失败:', error);
@@ -134,12 +152,12 @@ async function loadTeams() {
 
 // 创建组队卡片HTML
 function createTeamCard(team) {
-    const startTime = new Date(team.start_time);
+    const endTime = new Date(team.end_time);
     const now = new Date();
-    const isExpired = startTime < now;
+    const isEnded = endTime < now;
     
     return `
-        <div class="team-card ${isExpired ? 'expired' : ''}" onclick="handleTeamCardClick(${team.id}, ${team.is_joined})">
+        <div class="team-card ${isEnded ? 'ended' : ''}" onclick="handleTeamCardClick(${team.id}, ${team.is_joined})">
             <div class="team-header">
                 <div class="sport-icon">
                     <i class="fas ${getSportIcon(team.sport_type)}"></i>
@@ -149,6 +167,7 @@ function createTeamCard(team) {
                     <span class="sport-type">${getSportName(team.sport_type)}</span>
                 </div>
                 <div class="team-status">
+                    ${isEnded ? '<span class="ended-badge">已结束</span>' : ''}
                     ${team.is_joined ? '<span class="joined-badge">已加入</span>' : ''}
                     ${team.is_full ? '<span class="full-badge">已满员</span>' : ''}
                 </div>
@@ -178,17 +197,17 @@ function createTeamCard(team) {
             </div>
             
             <div class="team-actions" onclick="event.stopPropagation()">
-                ${!team.is_joined && !team.is_full && !isExpired ? `
+                ${!team.is_joined && !team.is_full && !isEnded ? `
                     <button onclick="joinTeam(${team.id})" class="btn-primary btn-sm">
                         <i class="fas fa-plus"></i> 加入组队
                     </button>
                 ` : ''}
-                ${team.is_joined ? `
+                ${team.is_joined && !isEnded ? `
                     <button onclick="leaveTeam(${team.id})" class="btn-danger btn-sm">
                         <i class="fas fa-minus"></i> 退出组队
                     </button>
                 ` : ''}
-                ${isExpired ? '<span class="expired-text">活动已结束</span>' : ''}
+                ${isEnded ? '<span class="ended-text">活动已结束</span>' : ''}
             </div>
         </div>
     `;

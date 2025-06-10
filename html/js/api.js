@@ -370,4 +370,30 @@ const api = {
             }
         }
     },
+
+    // 获取组队详情
+    getTeamDetail: async (teamId) => {
+        try {
+            const response = await fetch(`${BASE_URL}/teams/${teamId}/`, {
+                ...(await getRequestConfig('GET'))
+            });
+            
+            return await handleResponse(response);
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    // 获取组队成员列表
+    getTeamMembers: async (teamId) => {
+        try {
+            const response = await fetch(`${BASE_URL}/teams/${teamId}/members/`, {
+                ...(await getRequestConfig('GET'))
+            });
+            
+            return await handleResponse(response);
+        } catch (error) {
+            throw error;
+        }
+    },
 }; 

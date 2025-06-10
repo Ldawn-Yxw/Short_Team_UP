@@ -6,6 +6,7 @@
     <title>我的组队 - 运动组队系统</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/my_teams.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
@@ -40,7 +41,10 @@
                 <h1><i class="fas fa-user-friends"></i> 我的组队</h1>
             </div>
             <div class="user-menu">
-                <span class="username" id="username">用户名</span>
+                <a href="profile.html" class="profile-link">
+                    <i class="fas fa-user-circle"></i>
+                    <span class="username" id="username">用户名</span>
+                </a>
             </div>
         </header>
 
@@ -51,8 +55,14 @@
                 <div class="section-header">
                     <h2>组队列表</h2>
                     <div class="tab-buttons">
-                        <button class="tab-btn active" data-type="created">我创建的</button>
-                        <button class="tab-btn" data-type="joined">我参与的</button>
+                        <button class="tab-btn active" data-type="created">
+                            <i class="fas fa-crown"></i>
+                            <span>我创建的</span>
+                        </button>
+                        <button class="tab-btn" data-type="joined">
+                            <i class="fas fa-user-friends"></i>
+                            <span>我参与的</span>
+                        </button>
                     </div>
                 </div>
                 <div class="team-cards" id="teamList">

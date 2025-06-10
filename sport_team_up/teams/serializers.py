@@ -91,4 +91,33 @@ class RegistrationSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Registration
-        fields = ('id', 'user', 'team', 'registration_time', 'status') 
+        fields = ('id', 'user', 'team', 'registration_time', 'status')
+
+class TeamMemberSerializer(serializers.ModelSerializer):
+    """组队成员序列化器"""
+    username = serializers.CharField(source='user.username', read_only=True)
+    user_id = serializers.IntegerField(source='user.id', read_only=True)
+    age = serializers.IntegerField(source='user.age', read_only=True)
+    gender = serializers.CharField(source='user.gender', read_only=True)
+    wechat_id = serializers.CharField(source='user.wechat_id', read_only=True)
+    joined_at = serializers.DateTimeField(source='registration_time', read_only=True)
+    is_creator = serializers.SerializerMethodField()
+    join_order = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Registration
+        fields = ('username', 'user_id', 'age', 'gender', 'wechat_id', 'joined_at', 
+                 'is_creator', 'join_order')
+    
+    def get_is_creator(self, obj):
+        """检查是否是创建者"""
+        return obj.team.creator == obj.user
+    
+    def get_join_order(self, obj):
+        """获取加入顺序（第几个加入的）"""
+        earlier_members = Registration.objects.filter(
+            team=obj.team,
+            status='joined',
+            registration_time__lt=obj.registration_time
+        ).count()
+        return earlier_members + 1 

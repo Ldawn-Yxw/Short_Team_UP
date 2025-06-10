@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from .models import Team, Registration
-from .serializers import TeamCreateSerializer, TeamListSerializer, TeamDetailSerializer
+from .serializers import TeamCreateSerializer, TeamListSerializer, TeamDetailSerializer, TeamMemberSerializer
 # Create your views here.
 
 @csrf_exempt
@@ -159,3 +159,18 @@ def leave_team(request, team_id):
     team.save()
     
     return Response({'message': '成功退出组队'}, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def team_members(request, team_id):
+    """获取组队成员列表"""
+    team = get_object_or_404(Team, id=team_id)
+    
+    # 获取所有已加入的成员
+    members = Registration.objects.filter(
+        team=team,
+        status='joined'
+    ).select_related('user').order_by('registration_time')
+    
+    serializer = TeamMemberSerializer(members, many=True)
+    return Response(serializer.data)

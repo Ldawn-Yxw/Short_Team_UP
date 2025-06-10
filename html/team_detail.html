@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组队详情 - 运动组队系统</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/team_detail.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <!-- 左侧导航栏 -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-running"></i>
+            <span>运动组队系统</span>
+        </div>
+        <div class="sidebar-menu">
+            <a href="main.html">
+                <i class="fas fa-home"></i>
+                <span>首页</span>
+            </a>
+            <a href="create_team.html">
+                <i class="fas fa-plus-circle"></i>
+                <span>创建组队</span>
+            </a>
+            <a href="my_teams.html">
+                <i class="fas fa-user-friends"></i>
+                <span>我的组队</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- 主要内容区 -->
+    <main class="main-content">
+        <!-- 顶部栏 -->
+        <header class="top-bar">
+            <div class="page-title">
+                <button onclick="goBack()" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1><i class="fas fa-info-circle"></i> 组队详情</h1>
+            </div>
+            <div class="user-menu">
+                <a href="profile.html" class="profile-link">
+                    <i class="fas fa-user-circle"></i>
+                    <span class="username" id="username">用户名</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- 内容区域 -->
+        <div class="content-wrapper">
+            <!-- 组队基本信息 -->
+            <div class="team-info-section">
+                <div class="team-header-detail">
+                    <div class="sport-icon-large" id="sportIcon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="team-basic-info">
+                        <h1 id="teamTitle">组队标题</h1>
+                        <span class="sport-type-large" id="sportType">运动类型</span>
+                        <div class="team-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-user-crown"></i>
+                                <span id="creatorName">创建者</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-calendar"></i>
+                                <span id="teamDateTime">时间</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span id="teamLocation">地点</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-status-info">
+                        <div class="participant-count">
+                            <span class="count-number" id="currentCount">0</span>
+                            <span class="count-divider">/</span>
+                            <span class="count-total" id="targetCount">0</span>
+                            <span class="count-label">人</span>
+                        </div>
+                        <div class="status-badges" id="statusBadges">
+                            <!-- 状态徽章将动态生成 -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-requirements">
+                    <h3><i class="fas fa-clipboard-list"></i> 活动要求</h3>
+                    <p id="teamRequirements">组队要求描述</p>
+                </div>
+            </div>
+
+            <!-- 成员列表 -->
+            <div class="members-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-users"></i> 成员列表</h2>
+                    <span class="member-count-badge" id="memberCountBadge">0 名成员</span>
+                </div>
+                <div class="members-grid" id="membersList">
+                    <!-- 成员卡片将由JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 成员详情模态框 -->
+    <div class="modal" id="memberModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user"></i> 成员详情</h3>
+                <button class="close-btn" onclick="closeMemberModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="member-profile">
+                    <div class="member-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="member-info">
+                        <h4 id="modalMemberName">成员姓名</h4>
+                        <p id="modalMemberUsername">@用户名</p>
+                        <div class="member-details">
+                            <div class="detail-row">
+                                <i class="fas fa-venus-mars"></i>
+                                <span id="modalMemberGender">性别</span>
+                            </div>
+                            <div class="detail-row">
+                                <i class="fas fa-birthday-cake"></i>
+                                <span id="modalMemberAge">年龄</span>
+                            </div>
+                            <div class="detail-row">
+                                <i class="fab fa-weixin"></i>
+                                <span id="modalMemberWechat">微信号</span>
+                            </div>
+                            <div class="detail-row">
+                                <i class="fas fa-clock"></i>
+                                <span id="modalJoinedTime">加入时间</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="member-badges">
+                    <div class="badge creator-badge" id="modalCreatorBadge" style="display: none;">
+                        <i class="fas fa-crown"></i> 创建者
+                    </div>
+                    <div class="badge early-badge" id="modalEarlyBadge" style="display: none;">
+                        <i class="fas fa-star"></i> 早期加入
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/team_detail.js"></script>
+</body>
+</html> 

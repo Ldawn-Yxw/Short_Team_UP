@@ -108,12 +108,12 @@ async function loadMyTeams() {
 // 创建组队卡片HTML
 function createTeamCard(team) {
     const isCreator = currentType === 'created';
-    const startTime = new Date(team.start_time);
+    const endTime = new Date(team.end_time);
     const now = new Date();
-    const isExpired = startTime < now;
+    const isEnded = endTime < now;
     
     return `
-        <div class="team-card ${isExpired ? 'expired' : ''}">
+        <div class="team-card ${isEnded ? 'ended' : ''}" onclick="viewTeamDetail(${team.id})" style="cursor: pointer;">
             <div class="team-header">
                 <div class="sport-icon">
                     <i class="fas ${getSportIcon(team.sport_type)}"></i>
@@ -123,7 +123,9 @@ function createTeamCard(team) {
                     <span class="sport-type">${getSportName(team.sport_type)}</span>
                 </div>
                 <div class="team-status">
+                    ${isEnded ? '<span class="ended-badge">已结束</span>' : ''}
                     ${isCreator ? '<span class="creator-badge">创建者</span>' : '<span class="member-badge">已加入</span>'}
+                    ${team.is_full ? '<span class="full-badge">已满员</span>' : ''}
                 </div>
             </div>
             
@@ -139,7 +141,6 @@ function createTeamCard(team) {
                 <div class="detail-item">
                     <i class="fas fa-users"></i>
                     <span>${team.current_number}/${team.target_number}人</span>
-                    ${team.is_full ? '<span class="full-badge">已满员</span>' : ''}
                 </div>
             </div>
             
@@ -147,13 +148,16 @@ function createTeamCard(team) {
                 <p>${team.requirements}</p>
             </div>
             
-            <div class="team-actions">
-                ${!isCreator && !isExpired ? `
+            <div class="team-actions" onclick="event.stopPropagation()">
+                ${!isCreator && !isEnded ? `
                     <button onclick="leaveTeam(${team.id})" class="btn-danger btn-sm">
                         <i class="fas fa-sign-out-alt"></i> 退出组队
                     </button>
                 ` : ''}
-                ${isExpired ? '<span class="expired-text">活动已结束</span>' : ''}
+                ${isEnded ? '<span class="ended-text">活动已结束</span>' : ''}
+                <button onclick="viewTeamDetail(${team.id})" class="btn-primary btn-sm">
+                    <i class="fas fa-eye"></i> 查看成员
+                </button>
             </div>
         </div>
     `;
@@ -172,6 +176,12 @@ async function leaveTeam(teamId) {
     } catch (error) {
         alert('退出失败：' + error.message);
     }
+}
+
+// 查看组队详情（包含成员信息）
+function viewTeamDetail(teamId) {
+    // 跳转到组队详情页面，传递团队ID
+    window.location.href = `team_detail.html?id=${teamId}`;
 }
 
 // 获取运动类型图标
