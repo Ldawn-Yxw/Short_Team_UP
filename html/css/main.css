@@ -135,6 +135,7 @@ body {
     padding: 0.5rem;
     border-radius: 20px;
     transition: all 0.3s;
+    margin-left: auto;
 }
 
 .user-menu:hover {
