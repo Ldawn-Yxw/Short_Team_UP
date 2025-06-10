@@ -82,7 +82,7 @@ WSGI_APPLICATION = "sport_team_up.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "short",
+        "NAME": "sport",
         "USER": "root",
         "PASSWORD": "root",
         "HOST": "localhost",

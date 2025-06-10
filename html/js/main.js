@@ -20,7 +20,7 @@ async function loadUserProfile() {
     try {
         // 使用新的认证检查API
         const authResult = await api.checkAuth();
-        console.log('认证检查结果:', authRe sult);
+        console.log('认证检查结果:', authResult);
         
         // if (authResult.authenticated && authResult.user) {
         //     document.getElementById('username').textContent = authResult.user.username;
